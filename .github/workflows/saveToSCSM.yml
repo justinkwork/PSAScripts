@@ -9,8 +9,8 @@ jobs:
       - name: get changed files
         id: changed-files
         uses: jitterbit/get-changed-files@v1
-          with:
-            format: 'json'
+        with:
+          format: 'json'
       - name: Script
         run: ./merge.ps1
         shell: powershell.exe
