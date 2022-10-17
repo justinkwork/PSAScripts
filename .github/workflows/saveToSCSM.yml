@@ -15,4 +15,4 @@ jobs:
         run: ./merge.ps1
         shell: powershell
         env:
-          FilesOutput: ${{steps.changed-files.outputs.all_changed_files}}
+          FilesOutput: ${{steps.changed-files}}
