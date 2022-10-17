@@ -1,4 +1,5 @@
 write-output "Testing merge script"
-foreach ($file in $env:filesOutput) {
-    $file
-}
+$env:filesOutput
+# foreach ($file in $env:filesOutput) {
+#     $file
+# }
