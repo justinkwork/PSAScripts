@@ -16,3 +16,4 @@ jobs:
         shell: powershell
         env:
           FilesOutput: ${{steps.changed-files.outputs.All}}
+          ServerName: "jkwciresonscsm"
