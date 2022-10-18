@@ -8,7 +8,7 @@ foreach ($file in ($env:filesOutput | convertfrom-json)) {
         write-output "ShortName = $shortName `n"
         $fnParts = $shortName.split('.')
         if ($fnParts[$fnParts.length - 1] -eq 'ps1') {
-            $existing = get-scsmobject -class $psaScriptClass -computerName $env:ServerName -filter "Title eq $($fnParts[0])"
+            $existing = get-scsmobject -class $psaScriptClass -computerName $env:ServerName -filter "Title -eq $($fnParts[0])"
             if (!$existing) {
                 try {
                     write-output "Attempting to create new Script on $($env:servername) called $shortName"
