@@ -15,6 +15,7 @@ foreach ($file in ($env:filesOutput | convertfrom-json)) {
                     new-scsmobject -computerName $env:ServerName -class $psaScriptClass -propertyHashTable @{
                         Id = [guid]::newguid()
                         Title = $fnParts[0]
+                        DisplayName = $fnParts[0]
                         Enabled = $true
                     }
                 }
