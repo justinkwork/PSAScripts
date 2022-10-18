@@ -1,6 +1,9 @@
 name: save-to-scsm
 run-name: ${{ github.actor }} is doing some stuff
-on: [push]
+on: 
+  push:
+    branches:
+      - main
 jobs:
   update-sm-code:
     runs-on: self-hosted
