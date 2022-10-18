@@ -26,8 +26,13 @@ foreach ($file in ($env:filesOutput | convertfrom-json)) {
             }
 
             $scriptBody = (get-content $pwd/$shortname) -join "`n"
-            write-output "Setting Script on PSA Script Object"
-            $existing | set-scsmobject -property PowerShellScript -value $scriptBody -computerName $env:ServerName
+            if ($scriptBody -ne $($existing.PowerShellScript)) {
+                write-output "Setting Script on PSA Script Object"
+                $existing | set-scsmobject -property PowerShellScript -value $scriptBody -computerName $env:ServerName
+            }
+            else {
+                write-output "Script: $shortname is already up to date.  Skipping overwrite!"
+            }
         }
     }
 }
