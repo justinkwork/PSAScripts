@@ -1,4 +1,4 @@
-write-output "Testing merge script"
+write-output "Running merge script"
 
 $psaScriptClass = get-scsmclass -name Cireson.Powershell.Activity.Script$ -computerName $env:ServerName
 foreach ($file in ($env:filesOutput | convertfrom-json)) {
