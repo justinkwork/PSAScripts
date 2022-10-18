@@ -12,7 +12,7 @@ jobs:
         with:
           format: 'json'
       - name: Script
-        run: ./merge.ps1
+        run: ./.github/workflows/merge.ps1
         shell: powershell
         env:
           FilesOutput: ${{steps.changed-files.outputs.All}}
