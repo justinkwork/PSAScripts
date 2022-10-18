@@ -24,7 +24,7 @@ foreach ($file in ($env:filesOutput | convertfrom-json)) {
                 $existing = get-scsmobject -class $psaScriptClass -computerName $env:ServerName -filter "Title -eq $($fnParts[0])"
             }
 
-            $scriptBody = get-content $pwd/$shortname
+            $scriptBody = (get-content $pwd/$shortname) -join "`n"
             write-output "Setting Script on PSA Script Object"
             $existing | set-scsmobject -property PowerShellScript -value $scriptBody -computerName $env:ServerName
         }
