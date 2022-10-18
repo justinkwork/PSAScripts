@@ -6,7 +6,7 @@
 $organization= "CiresonAvengers"
 $projectName = "Support%20Customizations"
 $filePath= "c:\DevOpsBuild\"
-$token = "app6cyojkq3o4gapxorvbx2j6237ajuu7otcziu6s5v36futan6a"
+$token = ""
 
 $GitAccessToken = $token
 

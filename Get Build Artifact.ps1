@@ -5,7 +5,7 @@
 # Repo Information
 $organization = "justinkworkman"
 $projectName = "TFSFluent"
-$token = "ogds6lnofxa674bgdkz6vca25zndqbua7oojtq4ngzyzbqm4df7a"
+$token = ""
 
 $GitAccessToken = $token
 
