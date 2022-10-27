@@ -17,11 +17,23 @@ $psaVariables = Get-Content "c:\PSAVariables.txt" | ConvertFrom-Json
 $token = $psaVariables."Get-TikitUser".tikitToken
 $thisSR = get-scsmobject -$srId
 
-$affectedUserRel = get-scsmrelationshipobject -bysource $thisSR | ?{$_.RelationshipId -eq 'dff9be66-38b0-b6d6-6144-a412a3ebd4ce'}
-$user = get-scsmobject -Id $affectedUserRel.targetobject.Id
-
+$SrRels = get-scsmrelationshipobject -bysource $thisSR 
+$affecterUserRel = $srRels | ?{$_.RelationshipId -eq 'dff9be66-38b0-b6d6-6144-a412a3ebd4ce'}
+$user = get-scsmobject -Id $affecterUserRel.targetobject.Id
 $tikitUser = Get-TikitUser -username $user.UserName -tikitToken $token
 
-$newInputJson = @{TikitUser = $tikitUser.Id} | ConvertTo-Json
+$activityRels = $SrRels | ?{$_.RelationshipId -eq "2da498be-0485-b2b2-d520-6ebd1698e61b"}
+$activities = @()
+foreach ($a in $activityRels) {
+    $emoAct = get-scsmobject -id $a.TargetObject.Id
+    $activities += $emoAct
+}
+$thisActivity = $activities|?{$_.description -eq 'Get-TikitUser'}
+$nextActivity = $activities | ?{$_.sequenceId -eq $($thisActivity.SequenceId + 1)}
 
-$thisSr | Set-SCSMObject -Property InputJson -value $newInputJson
+if ($nextActivity) {
+    $nextActivity.Text6 = $tikitUser.Id
+}
+else {
+    write-output "Could not get next activity!"
+}
