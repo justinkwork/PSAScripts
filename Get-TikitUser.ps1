@@ -66,7 +66,7 @@ $nextActivity = $activities | ?{$_.sequenceId -eq $($thisActivity.SequenceId + 1
 
 if ($nextActivity) {
     Add-LogMessage -Message "Next Activity: $($nextActivity.Name)" -path $logpath
-    $nextActivity.Text6 = $tikitUser.Id
+    $nextActivity | set-scsmobject -property Text6 -value $tikitUser.Id
 }
 else {
     write-output "Could not get next activity!"
