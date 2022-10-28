@@ -15,7 +15,7 @@ function Get-TikitUser {
 $psaVariables = Get-Content "c:\PSAVariables.txt" | ConvertFrom-Json
 
 $token = $psaVariables."Get-TikitUser".tikitToken
-$thisSR = get-scsmobject -$srId
+$thisSR = get-scsmobject -Id $srId
 
 $SrRels = get-scsmrelationshipobject -bysource $thisSR 
 $affecterUserRel = $srRels | ?{$_.RelationshipId -eq 'dff9be66-38b0-b6d6-6144-a412a3ebd4ce'}
