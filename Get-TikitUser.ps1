@@ -40,7 +40,7 @@ function Get-TikitUser {
     return $user.value[0]
 }
 
-$logPath = "c:\Logs"
+$logPath = "c:\Logs\get-tikituser.log"
 
 Add-LogMessage -Message $srId -path $logpath
 
