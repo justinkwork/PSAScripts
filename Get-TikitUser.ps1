@@ -66,7 +66,15 @@ $nextActivity = $activities | ?{$_.sequenceId -eq $($thisActivity.SequenceId + 1
 
 if ($nextActivity) {
     Add-LogMessage -Message "Next Activity: $($nextActivity.Name)" -path $logpath
-    $nextActivity | set-scsmobject -property Text6 -value $tikitUser.Id
+    $nextActivity | set-scsmobject -property JKWInt1 -value $tikitUser.Id
+    $bodyContent = @(
+        @{ClassPropertyName = "Text01";PropertyType = "Body"; PropertyName = "Title"; PropertyValue = "Text2"}
+        @{ClassPropertyName = "Text01";PropertyType = "Body"; PropertyName = "PriorityId"; PropertyValue = "JKWInt3"}
+        @{ClassPropertyName = "Text01";PropertyType = "Body"; PropertyName = "TicketTypeId"; PropertyValue = "JKWInt4"}
+        @{ClassPropertyName = "Text01";PropertyType = "Body"; PropertyName = "StatusId"; PropertyValue = "JKWInt5"}
+        @{ClassPropertyName = "Text01";PropertyType = "Body"; PropertyName = "RequesterId"; PropertyValue = "JKWInt1"}
+    )
+    $nextActivity | set-scsmobject -property "WebhookUseCustomBodyContent" -value ($bodyContent | convertto-json -compress)
 }
 else {
     write-output "Could not get next activity!"
