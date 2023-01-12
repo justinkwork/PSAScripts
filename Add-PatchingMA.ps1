@@ -43,7 +43,12 @@ $primaryUserRel = Get-SCSMRelationshipClass -Name System.ComputerPrimaryUser$
 $assignedUser = Get-SCSMRelationshipClass -Name System.WorkItemAssignedToUser$
 if ($CRemo) {
     $desc = $CRemo.Description
-    $servers = "[" + $desc.split("[")[1] | ConvertFrom-Json
+    try {
+        $servers = "[" + $desc.split("[")[1] | ConvertFrom-Json
+    }
+    catch {
+        $servers = @()
+    }
 
     foreach ($server in $servers) {
         $proj = New-RelatedActivity -Parent $CRemo -ActivityClass $maclass -Prefix "MA" -Title "Run Updates on $($server)"
