@@ -39,6 +39,8 @@ $maClass = Get-SCSMClass -name system.workitem.activity.manualActivity
 $hasActivityRel = Get-SCSMRelationshipClass -name System.WorkItemContainsActivity
 $computerClass = Get-SCSMClass -name Microsoft.Windows.Computer$
 $relatesToConfig = Get-SCSMRelationshipClass -name System.WorkItemRelatesToConfigItem$
+$primaryUserRel = Get-SCSMRelationshipClass -Name System.ComputerPrimaryUser$
+$assignedUser = Get-SCSMRelationshipClass -Name System.WorkItemAssignedToUser$
 if ($CRemo) {
     $desc = $CRemo.Description
     $servers = "[" + $desc.split("[")[1] | ConvertFrom-Json
@@ -49,6 +51,12 @@ if ($CRemo) {
         $thisComputer = Get-SCSMObject -Class $computerClass -Filter "NetbiosComputerName -eq $($server)"
         if ($thisComputer) {
             New-SCSMRelationshipObject -Source $relatedActivity -Target $thisComputer -Relationship $relatesToConfig -Bulk
+            $primaryUsers = Get-SCSMRelationshipObject -BySource $primaryUserRel
+            if ($primaryUsers) {
+                $user = get-scsmobject -id $primaryUsers[0].TargetObject.Id
+                New-SCSMRelationshipObject -Source $relatedActivity -Target $user -Relationship $assignedUser -Bulk
+            }
+
         }
     }
 
