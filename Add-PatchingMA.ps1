@@ -56,9 +56,10 @@ if ($CRemo) {
         $thisComputer = Get-SCSMObject -Class $computerClass -Filter "NetbiosComputerName -eq $($server)"
         if ($thisComputer) {
             New-SCSMRelationshipObject -Source $relatedActivity -Target $thisComputer -Relationship $relatesToConfig -Bulk
-            $primaryUsers = Get-SCSMRelationshipObject -BySource $thisComputer |?{$_.RelationshipId -eq $primaryUserRel.Id}
-            if ($primaryUsers) {
-                $user = get-scsmobject -id $primaryUsers[0].TargetObject.Id
+            $primaryUsersRels = Get-SCSMRelationshipObject -BySource $thisComputer
+            $primaryUser = $primaryUsersRels |?{$_.RelationshipId -eq $primaryUserRel.Id}
+            if ($primaryUser) {
+                $user = get-scsmobject -id $primaryUser[0].TargetObject.Id
                 New-SCSMRelationshipObject -Source $relatedActivity -Target $user -Relationship $assignedUser -Bulk
             }
 
