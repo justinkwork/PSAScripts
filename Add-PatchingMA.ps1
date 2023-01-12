@@ -59,7 +59,7 @@ if ($CRemo) {
             $primaryUsersRels = Get-SCSMRelationshipObject -BySource $thisComputer
             $primaryUser = $primaryUsersRels |?{$_.RelationshipId -eq $primaryUserRel.Id}
             if ($primaryUser) {
-                $user = get-scsmobject -id $primaryUser[0].TargetObject.Id
+                $user = get-scsmobject -id $primaryUser.TargetObject.Id
                 New-SCSMRelationshipObject -Source $relatedActivity -Target $user -Relationship $assignedUser -Bulk
             }
 
