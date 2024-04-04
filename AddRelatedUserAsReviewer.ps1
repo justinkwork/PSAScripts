@@ -39,7 +39,7 @@ if ($parentSR) {
 $parentsRelsBySource = Get-SCSMRelationshipObject -BySource $parentSR 
 
 #filter on related CI rel
-$RelatedCiRO = $parentsRelsBySource | ?{($_.relationshipid -eq 'd96c8b59-8554-6e77-0aa7-f51448868b43') -and ($_.targetobject.className -eq "System.Domain.User")}
+$RelatedCiRO = $parentsRelsBySource | ?{($_.relationshipid -eq 'd96c8b59-8554-6e77-0aa7-f51448868b43') -and ($_.targetobject.className -eq "System.Domain.User")} | select -first 1
 
 #get selected User Object
 $selectedUser = Get-SCSMObject -Id $RelatedCiRO.targetobject.Id
